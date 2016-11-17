@@ -1,0 +1,25 @@
+<ion-pane>
+  <ion-header-bar class="bar-assertive">
+
+    <h1 class="title">Walmart</h1>
+
+  </ion-header-bar>
+
+  <ion-content>
+
+    <div><ol>
+      <div class="item item-divider">GPS Coordinates</div>
+      <li ng-repeat = "x in gpsCoordinates">
+
+        <div class="list" >
+
+          <div class="item">{{x.Latvalue +" , "+ x.Longvalue}} </div>
+
+        </div>
+      </li>
+    </ol></div>
+  </ion-content>
+  <ion-footer-bar class="bar-assertive">
+    <a href="#/home"><h1 class="title">Home</h1></a>
+  </ion-footer-bar>
+</ion-pane>

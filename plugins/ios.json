@@ -1,0 +1,46 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-plugin-geofence": {
+            "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-add-swift-support": {
+            "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
+        },
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
+        }
+    }
+}
