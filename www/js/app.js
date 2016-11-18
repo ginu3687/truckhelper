@@ -26,18 +26,18 @@ ApolloLite.run(function($ionicPlatform) {
 	// window.geofence is now available
     window.geofence.initialize().then(function () {
         console.log("Successful initialization");
-		alert("geo fence registered success");
+		//alert("geo fence registered success");
     }, function (error) {
         console.log("Error", error);
-		alert("geo fence register failed");
+		//alert("geo fence register failed");
     });
 	
 	//geofence codes:
 	if(window.geofence=== undefined){
-		alert("geo fence not defined");
+		//alert("geo fence not defined");
 	}
 	else {
-		alert("geofence intiliased");
+		//alert("geofence intiliased");
 	}
 	
 	var onSuccess = function(position) {
@@ -61,8 +61,8 @@ ApolloLite.run(function($ionicPlatform) {
 					notification: {         //Notification object
 						id:             1, //optional should be integer, id of notification
 						title:          "geo fence 1", //Title of notification
-						text:           "entered geo fence 1", //Text of notification
-						openAppOnClick: false,//is main app activity should be opened after clicking on notification
+						text:           "You have enterd the Destination area", //Text of notification
+						openAppOnClick: true,//is main app activity should be opened after clicking on notification
 						vibration:      [5000], //Optional vibration pattern - see description
 						data:           {
 										name: 'foo',
@@ -70,9 +70,19 @@ ApolloLite.run(function($ionicPlatform) {
 									}
 					}
 				}).then(function () {
-					alert('Geofence successfully added');
+					notification: {         //Notification object
+						id:             2, //optional should be integer, id of notification
+						title:          "geo fence2", //Title of notification
+						text:           "You have been assigend to Door-3, your average waiting time is 20mts.", //Text of notification
+						openAppOnClick: true,//is main app activity should be opened after clicking on notification
+						vibration:      [5000], //Optional vibration pattern - see description
+						data:           {
+										name: 'foo1',
+										lastName: 'bar2'
+									}
+					}
 				}, function (reason) {
-					alert('Adding geofence failed', reason);
+					//alert('Adding geofence failed', reason);
 				});
 				
 				
