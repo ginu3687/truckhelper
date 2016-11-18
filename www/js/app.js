@@ -1,117 +1,108 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
 
 var ApolloLite = angular.module('starter', ['ionic','ngCordova']);
 
-ApolloLite.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+ApolloLite.run(function($ionicPlatform,$cordovaLocalNotification,$ionicPopup) {
+	$ionicPlatform.ready(function() {
 
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
-      // Don't remove this line unless you know what you are doing. It stops the viewport
-      // from snapping when text inputs are focused. Ionic handles this internally for
-      // a much nicer keyboard experience.
-      cordova.plugins.Keyboard.disableScroll(true);
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
+		if(window.cordova && window.cordova.plugins.Keyboard) {
+			
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			cordova.plugins.Keyboard.disableScroll(true);
+		}
+		if(window.StatusBar) {
+		
+			StatusBar.styleDefault();
+		}
 	
-	// window.geofence is now available
-    window.geofence.initialize().then(function () {
-        console.log("Successful initialization");
-		//alert("geo fence registered success");
-    }, function (error) {
-        console.log("Error", error);
-		//alert("geo fence register failed");
-    });
+		window.geofence.initialize().then(function () {
+			console.log("Successful initialization");
+		}, function (error) {
+			console.log("Error", error);
+		});
 	
-	//geofence codes:
-	if(window.geofence=== undefined){
-		//alert("geo fence not defined");
-	}
-	else {
-		//alert("geofence intiliased");
-	}
+		if(window.geofence=== undefined){
+			console.log("debugging -- window.geofence not available");
+		}
+		else {
+			console.log("debugging -- window.geofence available");
+		}
 	
-	var onSuccess = function(position) {
+		var onSuccess = function(position) {
 
 			console.log('Latitude: '+ position.coords.latitude+ '\n' +
-              'Longitude: '+ position.coords.longitude );
-	};
-	
-	function onError(error) {
-        console.log('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
-	
-	navigator.geolocation.getCurrentPosition(onSuccess, onError);
-	window.geofence.addOrUpdate({
-					id: 'abc', 
-					latitude: 36.3337476, 
-					longitude: -94.24866659999999, 
-					radius: 100, 
-					transitionType: 3, 
-					notification: {         //Notification object
-						id:             1, //optional should be integer, id of notification
-						title:          "geo fence 1", //Title of notification
-						text:           "You have enterd the Destination area", //Text of notification
-						openAppOnClick: true,//is main app activity should be opened after clicking on notification
-						vibration:      [5000], //Optional vibration pattern - see description
-						data:           {
-										name: 'foo',
-										lastName: 'bar'
-									}
-					}
-				}).then(function () {
-					notification: {         //Notification object
-						id:             2, //optional should be integer, id of notification
-						title:          "geo fence2", //Title of notification
-						text:           "You have been assigend to Door-3, your average waiting time is 20mts.", //Text of notification
-						openAppOnClick: true,//is main app activity should be opened after clicking on notification
-						vibration:      [5000], //Optional vibration pattern - see description
-						data:           {
-										name: 'foo1',
-										lastName: 'bar2'
-									}
-					}
-				}, function (reason) {
-					//alert('Adding geofence failed', reason);
-				});
+				'Longitude: '+ position.coords.longitude );
+		};
+		
+		function onError(error) {
+			console.log('code: '    + error.code    + '\n' +
+				  'message: ' + error.message + '\n');
+		}
+		
+		navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		
+		window.geofence.addOrUpdate({
+			id: 'truckhelperarea', 
+			latitude: 36.3337476, 
+			longitude: -94.24866659999999, 
+			radius: 10000, 
+			transitionType: 3, 
+			notification: {     
+				id				:	1, 
+				title			:	"Welcome to DC area",
+				text			:	"You have enterd the Destination area. Load assigments will be notified soon!!!",
+				openAppOnClick	:	true,
+				vibration		:	[5000], 
+				data			:	{
+									name: 'DC 71132',
+									lastName: 'NY'
+								}
+							}
+		}).then(function () {
+			var notifyTime = new Date();
+			notifyTime.setMinutes(notifyTime.getMinutes() + 1);
+			$cordovaLocalNotification.add({
+				id: "1234",
+				date: notifyTime,
+				message: "Door Assigned",
+				title: "Door : 3 North 12. Average Wait Time : 20 minutes. ",
+				autoCancel: true,
+				sound: null
+			}).then(function () {
+				console.log("The notification has been set");
+			});
+		}, function (reason) {
+					
+		});
 				
 				
+		window.geofence.onTransitionReceived = function(geofences) {
+			geofences.forEach(function(geo) {
+				var alertPopup = $ionicPopup.alert({
+					 title: 'Door Assigned',
+					 template: 'Door : 3 North 12. Average Wait Time : 20 minutes. '
+				   });
 
-				//listen for geofences
-				window.geofence.onTransitionReceived = function(geofences) {
-					geofences.forEach(function(geo) {
-						console.log('Geofence transition detected', geo);
-						alert('Geofence transition detected: ' + geo);
-					});
-				};
-				
-				
-
+				   alertPopup.then(function(res) {
+					 console.log('geo fence handled.');
+				   });
+			 });
+		};
+			
   });
 })
 
 ApolloLite.config(function($stateProvider, $urlRouterProvider){
-  $stateProvider
-    .state('gps',{
-      url:'/gps',
-      templateUrl: 'gps.html',
-      controller: 'gpsCntrl'
-    })
-    .state('home',{
-      url:'/home',
-      templateUrl: 'home.html',
-      controller: 'homeCntrl'
-    });
+	$stateProvider
+		.state('gps',{
+			url:'/gps',
+			templateUrl: 'gps.html',
+			controller: 'gpsCntrl'
+		})
+		.state('home',{
+			url:'/home',
+			templateUrl: 'home.html',
+		controller: 'homeCntrl'
+		});
 
-  $urlRouterProvider.otherwise('/home');
+	$urlRouterProvider.otherwise('/home');
 })

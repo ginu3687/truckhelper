@@ -30,6 +30,9 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
         }
     },
     "dependent_plugins": {
@@ -40,6 +43,9 @@
             "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
         },
         "es6-promise-plugin": {
+            "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
+        },
+        "cordova-plugin-app-event": {
             "PACKAGE_NAME": "com.ionicframework.truckhelper707956"
         }
     }

@@ -1,10 +1,26 @@
 /**
  * Created by jayesh on 2/3/16.
  */
-ApolloLite.controller('gpsCntrl', function($rootScope) {
+ApolloLite.controller('gpsCntrl', function($scope,$rootScope, $state, $cordovaGeolocation) {
 
  // $rootScope.test = "testing";
-
+	var options = {timeout: 10000, enableHighAccuracy: true};
+	 
+	  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+	 
+		var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	 
+		var mapOptions = {
+		  center: latLng,
+		  zoom: 15,
+		  mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+	 
+		$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	 
+	  }, function(error){
+		console.log("Could not get location");
+	  });
 
 
 })
